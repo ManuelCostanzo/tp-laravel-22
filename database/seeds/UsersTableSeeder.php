@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
         	'document'			=>	39406740,
         	'phone'				=>	2214815847,
             'location_id'       =>  1,
+            'role_id'           =>  1,
         	'enabled'			=>	1
         ]);
 
@@ -33,6 +34,7 @@ class UsersTableSeeder extends Seeder
         	'document'			=>	39000000,
         	'phone'				=>	2214000000,
             'location_id'       =>  2,
+            'role_id'           =>  2,
         	'enabled'			=>	1
         ]);
 
@@ -45,6 +47,7 @@ class UsersTableSeeder extends Seeder
         	'document'			=>	20000000,
         	'phone'				=>	4560979,
             'location_id'       =>  3,
+            'role_id'           =>  3,
         	'enabled'			=>	0
         ]);
     }
