@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('name');
             $table->string('surname');
-            $table->bigInteger('document');
+            $table->bigInteger('document')->unique();
             $table->bigInteger('phone');
             $table->boolean('enabled')->default(false);
             $table->integer('location_id')->unsigned();

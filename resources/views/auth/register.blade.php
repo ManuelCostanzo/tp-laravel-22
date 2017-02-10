@@ -117,19 +117,25 @@
                             </div>
                         </div>
 
+
                         <div class="form-group{{ $errors->has('location_id') ? ' has-error' : '' }}">
-                            <label for="location_id" class="col-md-4 control-label">Location</label>
-
+                            <label for="location_id" class="col-md-4 control-label">Select location:</label>
                             <div class="col-md-6">
-                                <input id="location_id" type="text" class="form-control" name="location_id" value="{{ old('location_id') }}" required autofocus>
+                                <select class="form-control" id="location_id" name="location_id" required autofocus>
+                                    <option value="0">----</option>
+                                    @foreach ($locations as $value)
+                                        <option value="{{$value->id}}">{{$value->name}}</option>
+                                    @endforeach  
+                                </select>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('location_id'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('location_id') }}</strong>
                                     </span>
-                                @endif
+                                @endif                                
                             </div>
                         </div>
+
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
