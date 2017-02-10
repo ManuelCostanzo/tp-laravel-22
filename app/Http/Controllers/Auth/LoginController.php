@@ -25,7 +25,14 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+
+    protected function credentials(\Illuminate\Http\Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        return array_add($credentials, 'enabled', '1');
+    }
 
     /**
      * Create a new controller instance.
