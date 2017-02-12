@@ -67,8 +67,8 @@ class RegisterController extends Controller
             'password' => 'required|min:6|confirmed',
             'name' => 'required|min:2|max:255',
             'surname' => 'required|min:2|max:255',
-            'document' => 'required|min:5|numeric',
-            'phone' => 'required|min:3|numeric',
+            'document' => 'required|numeric|unique:users',
+            'phone' => 'required|numeric',
             'location_id' => 'required|exists:locations,id',
         ]);
     }

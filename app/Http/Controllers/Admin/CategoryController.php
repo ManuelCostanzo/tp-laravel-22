@@ -106,8 +106,8 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        if ($category->children()->count() > 0) {
-            Session::flash('flash_error_message', 'Cant delete becouse category has childrens');
+        if (($category->children->count() > 0) || ($category->products->count() > 0)) {
+            Session::flash('flash_error_message', 'Cant delete becouse category has childrens or products');
         } else {
             $category->delete();
             Session::flash('flash_message', 'Category successfully deleted!');

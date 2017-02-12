@@ -18,11 +18,12 @@ Route::get('/', 'HomeController@index');
 
 Route::group(['namespace' => 'Admin', 'middleware' => 'permissions:admin'], function () {
     
-    Route::get('/admin', function () {
-    	return view('admin/dashboard');
-    });
+    Route::get('/admin', 'HomeController@index');
+	Route::get('admin/products/missing', 'ProductController@missing')->name('products.missing');
+	Route::get('admin/products/minimum', 'ProductController@minimum')->name('products.minimum');
     
 	Route::resource('admin/categories', 'CategoryController');
+	Route::resource('admin/providers', 'ProviderController');
+	Route::resource('admin/brands', 'BrandController');
+	Route::resource('admin/products', 'ProductController');
 });
-
-Route::get('management', ['middleware' => 'permissions:management', 'uses' => 'ManagementController@index']);
