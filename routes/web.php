@@ -11,8 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
+
+Route::get('/', 'HomeController@index');
+
+Route::group(['namespace' => 'Admin', 'middleware' => 'permissions:admin'], function () {
+    
+    Route::get('/admin', function () {
+    	return view('admin/dashboard');
+    });
+    
+	Route::resource('admin/categories', 'CategoryController');
+});
+
+Route::get('management', ['middleware' => 'permissions:management', 'uses' => 'ManagementController@index']);

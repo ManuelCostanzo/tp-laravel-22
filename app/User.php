@@ -28,4 +28,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function role()
+    {
+        return $this->hasOne('App\Role', 'id', 'role_id');
+    }
+
+    public function is_admin() {
+        return $this->role->name == 'Administrador';
+    }
+
+    public function is_management() {
+        return $this->role->name == 'Gestion';
+    }
 }
