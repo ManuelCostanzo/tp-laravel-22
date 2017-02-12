@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
 	protected $fillable = ['name', 'parent_id'];
-	protected $rules = [
-    	'name' => 'sometimes|required|name|unique:categories',
-	];
 
 	public function parent()
 	{

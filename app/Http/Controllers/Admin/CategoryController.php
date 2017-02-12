@@ -12,7 +12,9 @@ class CategoryController extends Controller
 
    public function index()
     {
-        return view('admin.categories/index', ['categories' => Category::all()]);
+        return view('admin.categories/index', [
+            'categories' => Category::all()
+        ]);
     }
 
     /**
@@ -22,7 +24,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories/create', ['categories' => Category::all()]);
+        return view('admin.categories/create', [
+            'categories' => Category::pluck('name', 'id')
+        ]);
     }
 
     /**
@@ -37,9 +41,7 @@ class CategoryController extends Controller
             'parent_id' => 'nullable|exists:categories,id'
         ]);
 
-        $input = $request->all();
-
-        Category::create($input);
+        Category::create($request->all());
 
         Session::flash('flash_message', 'Category successfully added!');
 
@@ -54,10 +56,12 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $cat = Category::findOrFail($id);
-
-        return view('admin.categories/show')->withCategory($cat);
+        return view('admin.categories/show', [
+            'category' => Category::findOrFail($id)
+        ]);
     }
+
+
         /**
      * Show the form for editing the specified resource.
      *
@@ -66,10 +70,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $cat = Category::findOrFail($id);
-
         return view('admin.categories/edit', [
-            'category' => $cat, 
+            'category' => Category::findOrFail($id), 
             'categories' => Category::pluck('name', 'id')
         ]);
     }
@@ -81,16 +83,14 @@ class CategoryController extends Controller
      */
     public function update($id, Request $request)
     {
-        $cat = Category::findOrFail($id);
+        $category = Category::findOrFail($id);
 
         $this->validate($request, [
-            'name' => 'required|min:5|max:45|unique:categories,name,'.$cat->id,
+            'name' => 'required|min:5|max:45|unique:categories,name,'.$category->id,
             'parent_id' => 'nullable|exists:categories,id'
         ]);
 
-        $input = $request->all();
-
-        $cat->fill($input)->update();
+        $category->fill($request->all())->update();
 
         Session::flash('flash_message', 'Category successfully updated!');
 
@@ -104,11 +104,14 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $cat = Category::findOrFail($id);
+        $category = Category::findOrFail($id);
 
-        $cat->delete();
-
-        Session::flash('flash_message', 'Category successfully deleted!');
+        if ($category->children()->count() > 0) {
+            Session::flash('flash_error_message', 'Cant delete becouse category has childrens');
+        } else {
+            $category->delete();
+            Session::flash('flash_message', 'Category successfully deleted!');
+        }
 
         return redirect()->route('categories.index');
     }
