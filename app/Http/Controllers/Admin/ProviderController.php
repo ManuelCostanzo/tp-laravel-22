@@ -10,10 +10,15 @@ use Session;
 class ProviderController extends Controller
 {
 
+    public function __construct()
+    {
+    }
+
+
    public function index()
     {
         return view('admin.providers/index', [
-            'providers' => Provider::all()
+            'providers' => Provider::paginate(2)
         ]);
     }
 

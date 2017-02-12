@@ -1,4 +1,4 @@
-@foreach(['name', 'barcode', 'image'] as $value)
+@foreach(['name', 'barcode'] as $value)
     <div class="form-group{{ $errors->has($value) ? ' has-error' : '' }}">
         {{ Form::label($value, null, ['class' => 'col-md-4 control-label']) }}
 
@@ -29,6 +29,20 @@
         </div>
     </div>
 @endforeach
+
+    <div class="form-group{{ $errors->has('image_file') ? ' has-error' : '' }}">
+        {{ Form::label('image_file', 'Image (not required)', ['class' => 'col-md-4 control-label']) }}
+
+        <div class="col-md-6">
+            {{ Form::file('image_file', ['class' => 'form-control']) }}
+        
+            @if ($errors->has('image_file'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('image_file') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
 
 
  <div class="form-group{{ $errors->has('category_id') ? ' has-error' : '' }}">

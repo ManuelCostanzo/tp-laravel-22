@@ -10,6 +10,10 @@ use Session;
 class CategoryController extends Controller
 {
 
+    public function __construct()
+    {
+    }
+
    public function index()
     {
         return view('admin.categories/index', [

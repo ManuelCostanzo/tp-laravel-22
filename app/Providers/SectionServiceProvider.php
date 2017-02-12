@@ -18,12 +18,15 @@ class SectionServiceProvider extends ServiceProvider
         View::share('sections', [
                 'brands' => [
                     'icon'      => 'fa-empire',
+                    'permission' => 'admin',
                 ],
                 'categories' => [
                     'icon'      => 'fa-tags',
+                    'permission' => 'admin',
                 ],
                 'products' => [
                     'icon'      => 'fa-cutlery',
+                    'permission' => 'admin-mod',
                     'methods'   =>  [
                         'missing' => 'Missing', 
                         'minimum' => 'Minimum'
@@ -31,6 +34,7 @@ class SectionServiceProvider extends ServiceProvider
                 ],
                 'providers' => [
                     'icon'      => 'fa-user',
+                    'permission' => 'admin',
                 ],
             ]
         );

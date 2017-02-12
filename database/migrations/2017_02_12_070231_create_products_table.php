@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->integer('minimum_stock');
             $table->integer('unit_price');
             $table->text('description');
-            $table->string('image')->unique();
+            $table->string('image')->nullable();
             $table->integer('brand_id')->unsigned();
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->integer('category_id')->unsigned();

@@ -5,7 +5,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">Edit product</div>
         <div class="panel-body">
-            {!! Form::model($product, ['method' => 'PATCH', 'url' => route('products.update', $product->id), 'class' => 'form-horizontal']) !!}
+            {!! Form::model($product, ['method' => 'PATCH', 'url' => route('products.update', $product->id), 'class' => 'form-horizontal', 'files' => true]) !!}
 
                 @include('admin/products/form')
                 

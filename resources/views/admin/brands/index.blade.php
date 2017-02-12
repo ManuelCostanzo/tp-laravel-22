@@ -27,6 +27,7 @@
 		    @endforeach
 	    </tbody>
 	  </table>
+	  {{ $brands->links() }}
 	  </div>
 	</div>
 @endsection

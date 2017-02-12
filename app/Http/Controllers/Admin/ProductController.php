@@ -6,14 +6,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Session;
+use Storage;
 
 class ProductController extends Controller
 {
 
+    public function __construct()
+    {
+    }
+
    public function index()
     {
         return view('admin.products/index', [
-            'products' => Product::all()
+            'products' => Product::paginate(2)
         ]);
     }
 
@@ -45,11 +50,17 @@ class ProductController extends Controller
             'minimum_stock' => 'required|numeric',
             'unit_price' => 'required|numeric',
             'description' => 'required',
-            'image' => 'required',
+            'image_file' => 'image',
             'brand_id' => 'required|exists:brands,id',
             'category_id' => 'required|exists:categories,id',
             'provider_id' => 'required|exists:providers,id'
         ]);
+
+        if ($request->hasFile('image_file') && $request->file('image_file')->isValid()) {
+            $file = $request->file('image_file');
+            $path = Storage::disk('public')->put(null, $file);
+            $request->request->add(['image' => $path]);
+        }
 
         Product::create($request->all());
 
@@ -104,11 +115,17 @@ class ProductController extends Controller
             'minimum_stock' => 'required|numeric',
             'unit_price' => 'required|numeric',
             'description' => 'required',
-            'image' => 'required',
+            'image_file' => 'nullable|image',
             'brand_id' => 'required|exists:brands,id',
             'category_id' => 'required|exists:categories,id',
             'provider_id' => 'required|exists:providers,id'
         ]);
+
+        if ($request->hasFile('image_file') && $request->file('image_file')->isValid()) {
+            $file = $request->file('image_file');
+            $path = Storage::disk('public')->put(null, $file);
+            $request->request->add(['image' => $path]);
+        }
 
         $product->fill($request->all())->update();
 

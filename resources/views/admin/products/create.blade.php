@@ -5,7 +5,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">Create Product</div>
         <div class="panel-body">
-            {!! Form::open(['url' => route('products.store'), 'class' => 'form-horizontal']) !!}
+            {!! Form::open(['url' => route('products.store'), 'class' => 'form-horizontal', 'files' => true]) !!}
 
                 @include('admin/products/form')
                 

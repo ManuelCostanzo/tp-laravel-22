@@ -16,14 +16,20 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
-Route::group(['namespace' => 'Admin', 'middleware' => 'permissions:admin'], function () {
-    
-    Route::get('/admin', 'HomeController@index');
-	Route::get('admin/products/missing', 'ProductController@missing')->name('products.missing');
-	Route::get('admin/products/minimum', 'ProductController@minimum')->name('products.minimum');
-    
-	Route::resource('admin/categories', 'CategoryController');
-	Route::resource('admin/providers', 'ProviderController');
-	Route::resource('admin/brands', 'BrandController');
-	Route::resource('admin/products', 'ProductController');
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
+
+    #ADMIN-MOD AREA
+	Route::group(['middleware' => 'permissions:admin-mod'], function() {   
+		Route::get('/', 'DashboardController@index');
+		Route::get('products/missing', 'ProductController@missing')->name('products.missing');
+		Route::get('products/minimum', 'ProductController@minimum')->name('products.minimum');
+		Route::resource('products', 'ProductController');
+	});
+
+    #ADMIN AREA
+	Route::group(['middleware' => 'permissions:admin'], function() {   
+		Route::resource('categories', 'CategoryController');
+		Route::resource('providers', 'ProviderController');
+		Route::resource('brands', 'BrandController');
+	});
 });

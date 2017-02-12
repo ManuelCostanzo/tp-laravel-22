@@ -10,10 +10,15 @@ use Session;
 class BrandController extends Controller
 {
 
+    public function __construct()
+    {
+    }
+
+
    public function index()
     {
         return view('admin.brands/index', [
-            'brands' => Brand::all()
+            'brands' => Brand::paginate(2)
         ]);
     }
 

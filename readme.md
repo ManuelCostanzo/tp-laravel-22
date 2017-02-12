@@ -7,13 +7,16 @@ Practica del tp final
 Version:
 
 ```
-Laravel 5.3
+Laravel 5.4
 
 ```
 Paquetes:
 
 ```
 composer require "laravelcollective/html":"^5.2.0"
+```
+```
+composer require "cviebrock/image-validator"
 ```
 
 Base de datos:

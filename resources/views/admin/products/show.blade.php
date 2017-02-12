@@ -11,7 +11,7 @@
 	<li>MINIMUM_STOCK: {{$product->minimum_stock}}</li>
 	<li>UNIT_PRICE: ${{$product->unit_price}}</li>
 	<li>DESCRIPTION: <p>{{$product->description}}</p></li>
-	<li>IMAGE: {{$product->image}}</li>
+	<li>IMAGE: {{ Html::image(Storage::disk('uploads')->url($product->image), $product->name) }}</li>
 	<li>BRAND: {{$product->brand->name}}</li>
 	<li>CATEGORY: {{$product->category->name}}</li>
 	<li>PROVIDER: {{$product->provider->name}}</li>

@@ -29,6 +29,7 @@
 		    @endforeach
 	    </tbody>
 	  </table>
+	  {{ $providers->links() }}
 	  </div>
 	</div>
 @endsection

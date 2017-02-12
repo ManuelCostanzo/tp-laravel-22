@@ -18,6 +18,7 @@
                 </li>
 
           @foreach($sections as $key => $value)
+              @can($value['permission'])
                 <li  data-toggle="collapse" data-target="#{{$key}}" class="collapsed">
                   <a href="#"><i class="{{'fa ' . $value['icon'] . ' fa-lg'}}"></i> {{$key}} <span class="arrow"></span></a>
                 </li>
@@ -26,10 +27,12 @@
                     <li {{ (Request::fullUrlIs(route($key . '.create'))) ? 'class=active' : '' }}>{{ HTML::link(route($key . '.create'), 'Add') }}</li>
                     @if (isset($value['methods']))
                       @foreach($value['methods'] as $method => $title)
-                        <li {{ (Request::fullUrlIs(route($key . '.' . $method))) ? 'class=active' : '' }}> {{ HTML::link(route($key . '.' . $method), $title) }}</li>
+                        <li {{ (Request::fullUrlIs(route($key . '.' . $method))) ? 'class=active' : '' }}> {{ HTML::link(route($key . '.' . $method), $title) }}
+                        </li>
                       @endforeach
                     @endif
                 </ul>
+              @endcan
           @endforeach
                 
                  <li>
