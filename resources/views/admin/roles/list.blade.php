@@ -8,7 +8,7 @@
   </tr>
 </thead>
 <tbody>
-	@foreach($roles as $role)
+	@foreach($objects as $role)
       <tr>
         <td>{{$role->name}}</td>
         <td> <a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-primary"> show </a></td>
@@ -22,6 +22,6 @@
     @endforeach
 </tbody>
 </table>
-{{ $roles->appends(Request::only('q'))->links() }}
+{{ $objects->appends(Request::only('q'))->links() }}
 </div>
 </div>

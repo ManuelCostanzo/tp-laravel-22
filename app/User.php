@@ -17,7 +17,7 @@ class User extends Authenticatable
     protected $fillable = [
         'nick', 'email', 'password', 'name',
         'surname', 'document', 'phone', 'location_id',
-        'enabled'
+        'role_id', 'enabled'
     ];
 
     /**
@@ -29,9 +29,33 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public  function scopeLike($query, $field, $value){
+        return $query->where($field, 'LIKE', "%$value%");
+    }
+
+    public  function scopeLikeAll($query, $value){
+        return $query->where('nick', 'LIKE', "%$value%")
+             ->orWhere('email', '=', $value)
+             ->orWhere('name', 'LIKE', "%$value%")
+             ->orWhere('surname', 'LIKE', "%$value%")
+             ->orWhere('document', '=', $value)
+             ->orWhere('phone', 'LIKE', "%$value%")
+             ->orWhereHas('location', function($q) use ($value){
+                $q->like($value);
+             })
+             ->orWhereHas('role', function($q) use ($value){
+                $q->like($value);
+             });
+    }
+
     public function role()
     {
         return $this->hasOne('App\Role', 'id', 'role_id');
+    }
+
+    public function location()
+    {
+        return $this->hasOne('App\Location', 'id', 'location_id');
     }
 
     public function is_admin() {

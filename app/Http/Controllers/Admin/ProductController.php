@@ -12,7 +12,6 @@ class ProductController extends ResourceController
 
     public function __construct()
     {
-        $this->view_path = 'admin.products';
         $this->class = Product::class;
         $this->object_name = 'product';
         $this->route_name = 'products';
@@ -29,6 +28,17 @@ class ProductController extends ResourceController
         ];
 
         return parent::create();
+    }
+
+    public function edit($id)
+    {
+        $this->array = [
+            'categories' => \App\Category::pluck('name', 'id'),
+            'brands' => \App\Brand::pluck('name', 'id'),
+            'providers' => \App\Provider::pluck('name', 'id')
+        ];
+
+        return parent::edit($id);
     }
 
     public function store_validates() {
@@ -61,20 +71,8 @@ class ProductController extends ResourceController
         ];
     }
 
-
-    public function edit($id)
-    {
-        $this->array = [
-            'categories' => \App\Category::pluck('name', 'id'),
-            'brands' => \App\Brand::pluck('name', 'id'),
-            'providers' => \App\Provider::pluck('name', 'id')
-        ];
-
-        return parent::edit($id);
-    }
-
     public function search_condition(Request $request) {
-        return ['products'  => Product::likeAll($request->q)->paginate(2)];
+        return ['objects'  => Product::likeAll($request->q)->paginate(2)];
     }
 
 
@@ -101,6 +99,6 @@ class ProductController extends ResourceController
     }
 
     private function filter_by($filter) {
-        return ['products'  => Product::whereRaw($filter)->paginate(2)];
+        return ['objects'  => Product::whereRaw($filter)->paginate(2)];
     }
 }

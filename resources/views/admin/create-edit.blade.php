@@ -11,7 +11,11 @@
             
             <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
-                    {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
+                    @if ($action == 'create')
+                        {{ Form::submit('Create', ['class' => 'btn btn-primary']) }}
+                    @else
+                        {{ Form::submit('Edit', ['class' => 'btn btn-primary']) }}
+                    @endif
                 </div>
             </div>
         {!! Form::close() !!}

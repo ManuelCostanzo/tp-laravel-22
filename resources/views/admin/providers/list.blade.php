@@ -9,7 +9,7 @@
   </tr>
 </thead>
 <tbody>
-	@foreach($providers as $pr)
+	@foreach($objects as $pr)
       <tr>
         <td>{{$pr->name}}</td>
         <td>{{$pr->cuit}}</td>
@@ -24,6 +24,6 @@
     @endforeach
 </tbody>
 </table>
-{{ $providers->appends(Request::only('q'))->links() }}
+{{ $objects->appends(Request::only('q'))->links() }}
 </div>
 </div>

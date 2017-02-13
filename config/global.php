@@ -16,7 +16,10 @@ return [
         ],
         'providers' => [
             'controller'      => 'ProviderController',
-    	],
+        ],
+        'users' => [
+            'controller'      => 'UserController',
+        ],
     ],
     'admin-mod_sections' => [
         'products' => [

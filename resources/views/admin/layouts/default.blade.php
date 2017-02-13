@@ -35,11 +35,6 @@
               @endcan
           @endforeach
                 
-                 <li>
-                  <a href="#">
-                  <i class="fa fa-users fa-lg"></i> Users
-                  </a>
-                </li>
             </ul>
      </div>
 </div>

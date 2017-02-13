@@ -11,7 +11,6 @@ class ProviderController extends ResourceController
 
     public function __construct()
     {
-        $this->view_path = 'admin.providers';
         $this->class = Provider::class;
         $this->object_name = 'provider';
         $this->route_name = 'providers';
@@ -33,6 +32,6 @@ class ProviderController extends ResourceController
     }
 
     public function search_condition(Request $request) {
-        return ['providers'  => Provider::likeAll($request->q)->paginate(2)];
+        return ['objects'  => Provider::likeAll($request->q)->paginate(2)];
     }
 }

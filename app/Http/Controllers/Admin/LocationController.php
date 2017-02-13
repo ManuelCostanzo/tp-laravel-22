@@ -11,7 +11,6 @@ class LocationController extends ResourceController
 
     public function __construct(Request $request)
     {
-        $this->view_path = 'admin.locations';
         $this->class = Location::class;
         $this->object_name = 'location';
         $this->route_name = 'locations';
@@ -28,6 +27,6 @@ class LocationController extends ResourceController
     }
 
     public function search_condition(Request $request) {
-        return ['locations'  => Location::like($request->q)->paginate(2)];
+        return ['objects'  => Location::like($request->q)->paginate(2)];
     }
 }

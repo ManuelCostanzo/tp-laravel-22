@@ -11,7 +11,7 @@
   </tr>
 </thead>
 <tbody>
-	@foreach($products as $pr)
+	@foreach($objects as $pr)
       <tr>
         <td>{{$pr->name}}</td>
         <td>{{$pr->category->name}}</td>
@@ -28,4 +28,4 @@
     @endforeach
 </tbody>
 </table>
-{{ $products->appends(Request::only('q'))->links() }}
+{{ $objects->appends(Request::only('q'))->links() }}

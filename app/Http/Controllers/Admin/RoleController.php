@@ -11,7 +11,6 @@ class RoleController extends ResourceController
 
     public function __construct(Request $request)
     {
-        $this->view_path = 'admin.roles';
         $this->class = Role::class;
         $this->object_name = 'role';
         $this->route_name = 'roles';
@@ -28,6 +27,6 @@ class RoleController extends ResourceController
     }
 
     public function search_condition(Request $request) {
-        return ['roles'  => Role::like($request->q)->paginate(2)];
+        return ['objects'  => Role::like($request->q)->paginate(2)];
     }
 }

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('document')->unique();
             $table->bigInteger('phone');
             $table->boolean('enabled')->default(false);
-            $table->integer('location_id')->unsigned();
+            $table->integer('location_id')->nullable()->unsigned();
             $table->foreign('location_id')->references('id')->on('locations');
             $table->integer('role_id')->unsigned()->default(3);
             $table->foreign('role_id')->references('id')->on('roles');

@@ -44,6 +44,10 @@ class SectionServiceProvider extends ServiceProvider
                     'icon'      => 'fa-user',
                     'permission' => 'admin',
                 ],
+                'users' => [
+                    'icon'      => 'fa fa-users fa-lg',
+                    'permission' => 'admin',
+                ],
             ]
         );
     }

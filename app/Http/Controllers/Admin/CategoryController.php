@@ -17,7 +17,7 @@ class CategoryController extends Controller
    public function index()
     {
         return view('admin.categories/index', [
-            'categories' => Category::all()
+            'objects' => Category::all()
         ]);
     }
 
@@ -29,7 +29,7 @@ class CategoryController extends Controller
     public function create()
     {
         return view('admin.categories/create', [
-            'categories' => Category::pluck('name', 'id')
+            'objects' => Category::pluck('name', 'id')
         ]);
     }
 
@@ -61,7 +61,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         return view('admin.categories/show', [
-            'category' => Category::findOrFail($id)
+            'object' => Category::findOrFail($id)
         ]);
     }
 

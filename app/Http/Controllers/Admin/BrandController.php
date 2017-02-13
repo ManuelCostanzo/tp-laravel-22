@@ -11,7 +11,6 @@ class BrandController extends ResourceController
 
     public function __construct(Request $request)
     {
-        $this->view_path = 'admin.brands';
         $this->class = Brand::class;
         $this->object_name = 'brand';
         $this->route_name = 'brands';
@@ -28,6 +27,6 @@ class BrandController extends ResourceController
     }
 
     public function search_condition(Request $request) {
-        return ['brands'  => Brand::like($request->q)->paginate(2)];
+        return ['objects'  => Brand::like($request->q)->paginate(2)];
     }
 }

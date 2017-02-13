@@ -8,7 +8,7 @@
   </tr>
 </thead>
 <tbody>
-	@foreach($locations as $lo)
+	@foreach($objects as $lo)
       <tr>
         <td>{{$lo->name}}</td>
         <td> <a href="{{ route('locations.show', $lo->id) }}" class="btn btn-sm btn-primary"> show </a></td>
@@ -22,4 +22,4 @@
     @endforeach
 </tbody>
 </table>
-{{ $locations->appends(Request::only('q'))->links() }}
+{{ $objects->appends(Request::only('q'))->links() }}

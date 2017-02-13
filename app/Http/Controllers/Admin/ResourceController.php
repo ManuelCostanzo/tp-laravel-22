@@ -11,7 +11,7 @@ abstract class ResourceController extends Controller
 
 	public function index()
 	{
-		$this->array[$this->route_name] = $this->class::paginate(2);
+		$this->array['objects'] = $this->class::paginate(2);
 
         return $this->show_view('index', $this->array);
 	}
