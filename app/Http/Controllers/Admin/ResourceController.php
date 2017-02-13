@@ -13,7 +13,7 @@ abstract class ResourceController extends Controller
 	{
 		$this->array[$this->route_name] = $this->class::paginate(2);
 
-		return view($this->view_path . '/index', $this->array);
+        return $this->show_view('index', $this->array);
 	}
 
 
@@ -25,9 +25,9 @@ abstract class ResourceController extends Controller
      */
 	public function show($id)
 	{
-		$this->array[$this->item_name] = $this->getItem($id);
+		$this->array['object'] = $this->getItem($id);
 
-		return view($this->view_path . '/show', $this->array);
+        return $this->show_view('show', $this->array);
 	}
 
 
@@ -38,7 +38,9 @@ abstract class ResourceController extends Controller
      */
     public function create()
     {
-        return view($this->view_path . '/create', $this->array);
+        $this->array['action'] = 'create';
+
+        return $this->show_view('create-edit', $this->array);
     }
 
 
@@ -54,7 +56,7 @@ abstract class ResourceController extends Controller
 
         $this->class::create($this->modify_request($request)->all());
 
-        Session::flash('flash_message', "$this->item_name successfully added!");
+        Session::flash('flash_message', "$this->object_name successfully added!");
 
         return redirect()->back();
     }
@@ -68,9 +70,10 @@ abstract class ResourceController extends Controller
      */
     public function edit($id)
     {
-    	$this->array[$this->item_name] = $this->getItem($id);
+    	$this->array['object'] = $this->getItem($id);
+        $this->array['action'] = 'edit';
 
-        return view($this->view_path . '/edit', $this->array);
+        return $this->show_view('create-edit', $this->array);
     }
 
 
@@ -88,7 +91,7 @@ abstract class ResourceController extends Controller
 
         $object->fill($this->modify_request($request)->all())->update();
 
-        Session::flash('flash_message', "$this->item_name successfully updated!");
+        Session::flash('flash_message', "$this->object_name successfully updated!");
 
         return redirect()->back();
     }
@@ -105,9 +108,9 @@ abstract class ResourceController extends Controller
 
 		try {
 	       $object->delete();
-           Session::flash('flash_message', "$this->item_name successfully deleted!");
+           Session::flash('flash_message', "$this->object_name successfully deleted!");
 	    } catch ( \Exception $e) {
-	       Session::flash('flash_error_message', "Cant delete becouse $this->item_name has items related");
+	       Session::flash('flash_error_message', "Cant delete becouse $this->object_name has items related");
 	    }
 
         return redirect()->route($this->route_name . '.index');
@@ -118,7 +121,7 @@ abstract class ResourceController extends Controller
 
     	$this->validator($this->search_validates(), $request);
 
-		return view($this->view_path . '/index', $this->search_condition($request));
+        return $this->show_view('index', $this->search_condition($request));
     }
 
     public function search_validates() {
@@ -136,5 +139,17 @@ abstract class ResourceController extends Controller
 
     public function modify_request(Request $request) {
     	return $request;
+    }
+
+    protected function show_view($section, $params) {
+        return view('admin.resource', $params, $this->get_view_params($section));
+    }
+
+    protected function get_view_params($section) {
+        return [
+            'view' => $section, 
+            'route' => $this->route_name,
+            'object_name' => $this->object_name
+        ];
     }
 }

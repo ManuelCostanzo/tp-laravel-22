@@ -13,7 +13,7 @@ class RoleController extends ResourceController
     {
         $this->view_path = 'admin.roles';
         $this->class = Role::class;
-        $this->item_name = 'role';
+        $this->object_name = 'role';
         $this->route_name = 'roles';
         $this->array = [];
     }

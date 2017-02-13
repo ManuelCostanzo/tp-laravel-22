@@ -13,7 +13,7 @@ class BrandController extends ResourceController
     {
         $this->view_path = 'admin.brands';
         $this->class = Brand::class;
-        $this->item_name = 'brand';
+        $this->object_name = 'brand';
         $this->route_name = 'brands';
         $this->array = [];
     }

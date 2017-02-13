@@ -13,7 +13,7 @@ class LocationController extends ResourceController
     {
         $this->view_path = 'admin.locations';
         $this->class = Location::class;
-        $this->item_name = 'location';
+        $this->object_name = 'location';
         $this->route_name = 'locations';
         $this->array = [];
     }

@@ -14,7 +14,7 @@ class ProductController extends ResourceController
     {
         $this->view_path = 'admin.products';
         $this->class = Product::class;
-        $this->item_name = 'product';
+        $this->object_name = 'product';
         $this->route_name = 'products';
         $this->array = [];
     }
@@ -80,11 +80,12 @@ class ProductController extends ResourceController
 
     public function missing() {
 
-        return view('admin.products/index', $this->filter_by('stock < minimum_stock'));    }
+        return $this->show_view('index', $this->filter_by('stock < minimum_stock'));
+    }
 
     public function minimum() {
 
-        return view('admin.products/index', $this->filter_by('stock = minimum_stock'));
+        return $this->show_view('index', $this->filter_by('stock = minimum_stock'));
     }
 
 

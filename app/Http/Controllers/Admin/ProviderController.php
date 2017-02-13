@@ -13,7 +13,7 @@ class ProviderController extends ResourceController
     {
         $this->view_path = 'admin.providers';
         $this->class = Provider::class;
-        $this->item_name = 'provider';
+        $this->object_name = 'provider';
         $this->route_name = 'providers';
         $this->array = [];
     }
