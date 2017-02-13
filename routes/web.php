@@ -18,21 +18,30 @@ Route::get('/', 'HomeController@index');
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
-    #ADMIN-MOD AREA
-	Route::group(['middleware' => 'permissions:admin-mod'], function() {   
-		Route::get('/', 'DashboardController@index');
-		Route::get('products/missing', 'ProductController@missing')->name('products.missing');
-		Route::get('products/minimum', 'ProductController@minimum')->name('products.minimum');
-		Route::get('products/searh', 'ProductController@search')->name('products.search');
-		Route::resource('products', 'ProductController');
-	});
 
-    #ADMIN AREA
-	Route::group(['middleware' => 'permissions:admin'], function() {   
-		Route::resource('categories', 'CategoryController');
-		Route::get('providers/searh', 'ProviderController@search')->name('providers.search');
-		Route::resource('providers', 'ProviderController');
-			Route::get('brands/search', 'BrandController@search')->name('brands.search');
-			Route::resource('brands', 'BrandController');
+	#ADMIN AREA
+    Route::group(['middleware' => 'permissions:admin'], function() {
+    	create_admin_routes('admin');
+   	});
+
+
+    #ADMIN-MOD AREA
+    Route::group(['middleware' => 'permissions:admin-mod'], function() {
+    	Route::get('/', 'DashboardController@index');
+    	create_admin_routes('admin-mod');
 	});
 });
+
+function create_admin_routes($permission) {
+	foreach (config('global.' . $permission . '_sections') as $key => $section) {
+		Route::get($key . '/searh', $section['controller'] . '@search')->name($key . '.search');
+		
+		if (isset($section['methods'])) {
+			foreach ($section['methods'] as $method) {
+				Route::get($key . '/' . $method, $section['controller'] . '@'. $method)->name($key . '.' . $method);
+			}
+		}
+
+		Route::resource($key, $section['controller']);
+	}
+}

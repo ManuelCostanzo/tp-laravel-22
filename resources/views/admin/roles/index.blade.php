@@ -3,24 +3,24 @@
 @section('admin-content')
 
 	<div class="col-12 col-sm-12 col-lg-12"> 
-	@include('admin/brands/search')         
+	@include('admin/roles/search')         
 	  <table class="table">
 	    <thead>
 	      <tr>
-	        <th>Brand</th>
+	        <th>Role</th>
 	        <th>Show</th>
 	        <th>Edit</th>
 	        <th>Delete</th>
 	      </tr>
 	    </thead>
 	    <tbody>
-	    	@foreach($brands as $br)
+	    	@foreach($roles as $role)
 		      <tr>
-		        <td>{{$br->name}}</td>
-		        <td> <a href="{{ route('brands.show', $br->id) }}" class="btn btn-sm btn-primary"> show </a></td>
-		        <td> <a href="{{ route('brands.edit', $br->id) }}" class="btn btn-sm btn-warning"> edit </a></td>
+		        <td>{{$role->name}}</td>
+		        <td> <a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-primary"> show </a></td>
+		        <td> <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-warning"> edit </a></td>
 		        <td>        
-		        	{!! Form::open(['method' => 'DELETE', 'route' => ['brands.destroy', $br->id]]) !!}
+		        	{!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id]]) !!}
             			{!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) !!}
         			{!! Form::close() !!}
         		</td>
@@ -28,7 +28,7 @@
 		    @endforeach
 	    </tbody>
 	  </table>
-	  {{ $brands->appends(Request::only('q'))->links() }}
+	  {{ $roles->appends(Request::only('q'))->links() }}
 	  </div>
 	</div>
 @endsection

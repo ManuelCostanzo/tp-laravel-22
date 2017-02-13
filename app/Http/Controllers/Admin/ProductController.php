@@ -5,45 +5,34 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Product;
-use Session;
 use Storage;
 
-class ProductController extends Controller
+class ProductController extends ResourceController
 {
 
     public function __construct()
     {
+        $this->view_path = 'admin.products';
+        $this->class = Product::class;
+        $this->item_name = 'product';
+        $this->route_name = 'products';
+        $this->array = [];
     }
 
-   public function index()
-    {
-        return view('admin.products/index', [
-            'products' => Product::paginate(2)
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create()
     {
-        return view('admin.products/create', [
+
+        $this->array = [
             'categories' => \App\Category::pluck('name', 'id'),
             'brands' => \App\Brand::pluck('name', 'id'),
             'providers' => \App\Provider::pluck('name', 'id')
-        ]);
+        ];
+
+        return parent::create();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
+    public function store_validates() {
+        return  [
             'name' => 'required|min:5|max:45|unique:products',
             'barcode' => 'required|unique:products',
             'stock' => 'required|numeric',
@@ -54,61 +43,11 @@ class ProductController extends Controller
             'brand_id' => 'required|exists:brands,id',
             'category_id' => 'required|exists:categories,id',
             'provider_id' => 'required|exists:providers,id'
-        ]);
-
-        if ($request->hasFile('image_file') && $request->file('image_file')->isValid()) {
-            $file = $request->file('image_file');
-            $path = Storage::disk('public')->put(null, $file);
-            $request->request->add(['image' => $path]);
-        }
-
-        Product::create($request->all());
-
-        Session::flash('flash_message', 'Product successfully added!');
-
-        return redirect()->back();
+        ];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return view('admin.products/show', [
-            'product' => Product::findOrFail($id)
-        ]);
-    }
-
-
-        /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('admin.products/edit', [
-            'product' => Product::findOrFail($id),
-            'categories' => \App\Category::pluck('name', 'id'),
-            'brands' => \App\Brand::pluck('name', 'id'),
-            'providers' => \App\Provider::pluck('name', 'id')
-        ]);
-    }
-        /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id, Request $request)
-    {
-        $product = Product::findOrFail($id);
-
-        $this->validate($request, [
+    public function update_validates($product) {
+        return [
             'name' => 'required|min:5|max:45|unique:products,name,'.$product->id,
             'barcode' => 'required|unique:products,barcode,'.$product->id,
             'stock' => 'required|numeric',
@@ -119,59 +58,48 @@ class ProductController extends Controller
             'brand_id' => 'required|exists:brands,id',
             'category_id' => 'required|exists:categories,id',
             'provider_id' => 'required|exists:providers,id'
-        ]);
-
-        if ($request->hasFile('image_file') && $request->file('image_file')->isValid()) {
-            $file = $request->file('image_file');
-            $path = Storage::disk('public')->put(null, $file);
-            $request->request->add(['image' => $path]);
-        }
-
-        $product->fill($request->all())->update();
-
-        Session::flash('flash_message', 'Product successfully updated!');
-
-        return redirect()->back();
+        ];
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
+
+
+    public function edit($id)
     {
-        $product = Product::findOrFail($id)->delete();
+        $this->array = [
+            'categories' => \App\Category::pluck('name', 'id'),
+            'brands' => \App\Brand::pluck('name', 'id'),
+            'providers' => \App\Provider::pluck('name', 'id')
+        ];
 
-        Session::flash('flash_message', 'Product successfully deleted!');
+        return parent::edit($id);
+    }
 
-        return redirect()->route('products.index');
+    public function search_condition(Request $request) {
+        return ['products'  => Product::likeAll($request->q)->paginate(2)];
     }
 
 
     public function missing() {
 
-        return view('admin.products/index', [
-            'products'  => Product::whereRaw('stock < minimum_stock')->paginate(2)
-        ]);
-    }
+        return view('admin.products/index', $this->filter_by('stock < minimum_stock'));    }
 
     public function minimum() {
 
-        return view('admin.products/index', [
-            'products'  => Product::whereRaw('stock = minimum_stock')->paginate(2)
-        ]);
+        return view('admin.products/index', $this->filter_by('stock = minimum_stock'));
     }
 
-    public function search(Request $request) {
 
-        $this->validate($request, [
-            'q' => 'required|max:255',
-        ]);
+    public function modify_request(Request $request) {
 
-        return view('admin.products/index', [
-            'products'  => Product::likeAll($request->q)->paginate(2)
-        ]);
+        if ($request->hasFile('image_file') && $request->file('image_file')->isValid()) {
+            $file = $request->file('image_file');
+            $path = Storage::disk('public')->put(null, $file);
+            $request->request->add(['image' => $path]);
+        }       
 
+        return $request;
+    }
+
+    private function filter_by($filter) {
+        return ['products'  => Product::whereRaw($filter)->paginate(2)];
     }
 }

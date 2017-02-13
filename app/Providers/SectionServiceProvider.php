@@ -16,6 +16,14 @@ class SectionServiceProvider extends ServiceProvider
     public function boot()
     {
         View::share('sections', [
+                'locations' => [
+                    'icon'      => 'fa fa-building-o',
+                    'permission' => 'admin',
+                ],
+                'roles' => [
+                    'icon'      => 'fa fa-cloud',
+                    'permission' => 'admin',
+                ],
                 'brands' => [
                     'icon'      => 'fa-empire',
                     'permission' => 'admin',

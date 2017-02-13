@@ -3,7 +3,7 @@
 @section('admin-content')
 
 	<div class="col-12 col-sm-12 col-lg-12"> 
-	@include('admin/brands/search')         
+	@include('admin/locations/search')         
 	  <table class="table">
 	    <thead>
 	      <tr>
@@ -14,13 +14,13 @@
 	      </tr>
 	    </thead>
 	    <tbody>
-	    	@foreach($brands as $br)
+	    	@foreach($locations as $lo)
 		      <tr>
-		        <td>{{$br->name}}</td>
-		        <td> <a href="{{ route('brands.show', $br->id) }}" class="btn btn-sm btn-primary"> show </a></td>
-		        <td> <a href="{{ route('brands.edit', $br->id) }}" class="btn btn-sm btn-warning"> edit </a></td>
+		        <td>{{$lo->name}}</td>
+		        <td> <a href="{{ route('locations.show', $lo->id) }}" class="btn btn-sm btn-primary"> show </a></td>
+		        <td> <a href="{{ route('locations.edit', $lo->id) }}" class="btn btn-sm btn-warning"> edit </a></td>
 		        <td>        
-		        	{!! Form::open(['method' => 'DELETE', 'route' => ['brands.destroy', $br->id]]) !!}
+		        	{!! Form::open(['method' => 'DELETE', 'route' => ['locations.destroy', $lo->id]]) !!}
             			{!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) !!}
         			{!! Form::close() !!}
         		</td>
@@ -28,7 +28,7 @@
 		    @endforeach
 	    </tbody>
 	  </table>
-	  {{ $brands->appends(Request::only('q'))->links() }}
+	  {{ $locations->appends(Request::only('q'))->links() }}
 	  </div>
 	</div>
 @endsection

@@ -30,7 +30,7 @@
 		    @endforeach
 	    </tbody>
 	  </table>
-	  {{ $providers->links() }}
+	  {{ $providers->appends(Request::only('q'))->links() }}
 	  </div>
 	</div>
 @endsection
