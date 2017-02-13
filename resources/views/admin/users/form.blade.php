@@ -14,7 +14,6 @@
     </div>
 </div>
 
-@if ($action == 'create')
 @foreach(['password', 'password_confirmation'] as $value)
     <div class="form-group{{ $errors->has($value) ? ' has-error' : '' }}">
         {{ Form::label($value, null, ['class' => 'col-md-4 control-label']) }}
@@ -30,7 +29,6 @@
         </div>
     </div>
 @endforeach
-@endif
 
 @foreach(['nick', 'name', 'surname', 'document', 'phone'] as $value)
     <div class="form-group{{ $errors->has($value) ? ' has-error' : '' }}">
@@ -63,13 +61,27 @@
 
 
 <div class="form-group{{ $errors->has('location_id') ? ' has-error' : '' }}">
-    {{ Form::label('location_id', 'Select location_id (required if role is Online):', ['class' => 'col-md-4 control-label']) }}
+    {{ Form::label('location_id', 'Select location (required if role is Online):', ['class' => 'col-md-4 control-label']) }}
     <div class="col-md-6">
         {!! Form::select('location_id', $locations, old('location_id'), ['class' => 'form-control', 'placeholder' => '-----']) !!}
 
         @if ($errors->has('location_id'))
             <span class="help-block">
                 <strong>{{ $errors->first('location_id') }}</strong>
+            </span>
+        @endif                                
+    </div>
+</div>
+
+<div class="form-group{{ $errors->has('enabled') ? ' has-error' : '' }}">
+    {{ Form::label('enabled', 'Enable:', ['class' => 'col-md-4 control-label']) }}
+    <div class="col-md-6">
+        Yes: {!! Form::radio('enabled', 1, true) !!}
+        No: {!! Form::radio('enabled', 0, false) !!}
+
+        @if ($errors->has('enabled'))
+            <span class="help-block">
+                <strong>{{ $errors->first('enabled') }}</strong>
             </span>
         @endif                                
     </div>
