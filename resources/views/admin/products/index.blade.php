@@ -2,7 +2,8 @@
 
 @section('admin-content')
 
-	<div class="col-12 col-sm-12 col-lg-12">          
+	<div class="col-12 col-sm-12 col-lg-12"> 
+		@include('admin/products/search')         
 	  <table class="table">
 	    <thead>
 	      <tr>
@@ -33,7 +34,7 @@
 		    @endforeach
 	    </tbody>
 	  </table>
-	  {{ $products->links() }}
+	  {{ $products->appends(Request::only('q'))->links() }}
 	  </div>
 	</div>
 @endsection

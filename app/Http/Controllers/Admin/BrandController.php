@@ -10,7 +10,7 @@ use Session;
 class BrandController extends Controller
 {
 
-    public function __construct()
+    public function __construct(Request $request)
     {
     }
 
@@ -114,5 +114,16 @@ class BrandController extends Controller
         }
 
         return redirect()->route('brands.index');
+    }
+
+    public function search(Request $request) {
+
+        $this->validate($request, [
+            'q' => 'required|max:255',
+        ]);
+
+        return view('admin.brands/index', [
+            'brands'  => Brand::like($request->q)->paginate(2)
+        ]);
     }
 }

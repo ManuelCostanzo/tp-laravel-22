@@ -152,14 +152,26 @@ class ProductController extends Controller
     public function missing() {
 
         return view('admin.products/index', [
-            'products'  => Product::whereRaw('stock < minimum_stock')->get()
+            'products'  => Product::whereRaw('stock < minimum_stock')->paginate(2)
         ]);
     }
 
     public function minimum() {
 
         return view('admin.products/index', [
-            'products'  => Product::whereRaw('stock = minimum_stock')->get()
+            'products'  => Product::whereRaw('stock = minimum_stock')->paginate(2)
         ]);
+    }
+
+    public function search(Request $request) {
+
+        $this->validate($request, [
+            'q' => 'required|max:255',
+        ]);
+
+        return view('admin.products/index', [
+            'products'  => Product::likeAll($request->q)->paginate(2)
+        ]);
+
     }
 }

@@ -2,7 +2,8 @@
 
 @section('admin-content')
 
-	<div class="col-12 col-sm-12 col-lg-12">          
+	<div class="col-12 col-sm-12 col-lg-12"> 
+	@include('admin/brands/search')         
 	  <table class="table">
 	    <thead>
 	      <tr>

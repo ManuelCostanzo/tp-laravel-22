@@ -8,6 +8,12 @@ class Category extends Model
 {
 	protected $fillable = ['name', 'parent_id'];
 
+
+    public  function scopeLike($query, $value){
+        return $query->where('name', 'LIKE', "%$value%");
+    }
+
+
 	public function parent()
 	{
 	    return $this->belongsTo(self::class, 'parent_id');

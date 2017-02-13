@@ -117,4 +117,15 @@ class ProviderController extends Controller
 
         return redirect()->route('providers.index');
     }
+
+    public function search(Request $request) {
+
+        $this->validate($request, [
+            'q' => 'required|max:255',
+        ]);
+
+        return view('admin.providers/index', [
+            'providers'  => Provider::likeAll($request->q)->paginate(2)
+        ]);
+    }
 }

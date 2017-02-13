@@ -23,13 +23,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 		Route::get('/', 'DashboardController@index');
 		Route::get('products/missing', 'ProductController@missing')->name('products.missing');
 		Route::get('products/minimum', 'ProductController@minimum')->name('products.minimum');
+		Route::get('products/searh', 'ProductController@search')->name('products.search');
 		Route::resource('products', 'ProductController');
 	});
 
     #ADMIN AREA
 	Route::group(['middleware' => 'permissions:admin'], function() {   
 		Route::resource('categories', 'CategoryController');
+		Route::get('providers/searh', 'ProviderController@search')->name('providers.search');
 		Route::resource('providers', 'ProviderController');
-		Route::resource('brands', 'BrandController');
+			Route::get('brands/search', 'BrandController@search')->name('brands.search');
+			Route::resource('brands', 'BrandController');
 	});
 });

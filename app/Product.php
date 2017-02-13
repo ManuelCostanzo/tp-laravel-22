@@ -17,6 +17,28 @@ class Product extends Model {
         'category_id', 'provider_id'
     ];
 
+    public  function scopeLike($query, $field, $value){
+        return $query->where($field, 'LIKE', "%$value%");
+    }
+
+    public  function scopeLikeAll($query, $value){
+        return $query->where('name', 'LIKE', "%$value%")
+             ->orWhere('barcode', '=', $value)
+             ->orWhere('stock', '=', $value)
+             ->orWhere('minimum_stock', '=', $value)
+             ->orWhere('unit_price', '=', $value)
+             ->orWhere('description', 'LIKE', "%$value%")
+             ->orWhereHas('brand', function($q) use ($value){
+                $q->like($value);
+             })
+             ->orWhereHas('category', function($q) use ($value){
+                $q->like($value);
+             })
+             ->orWhereHas('provider', function($q) use ($value){
+                $q->like('name', $value);
+             });
+    }
+
     public function provider()
     {
         return $this->hasOne('App\Provider', 'id', 'provider_id');
@@ -27,7 +49,7 @@ class Product extends Model {
         return $this->hasOne('App\Category', 'id', 'category_id');
     }
 
-    public function Brand() {
+    public function brand() {
         return $this->hasOne('App\Brand', 'id', 'brand_id');
     }
 }
