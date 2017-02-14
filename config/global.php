@@ -29,5 +29,8 @@ return [
                 'minimum'       => 'minimum'
             ],
         ],
+        'menus' => [
+            'controller'      => 'MenuController',
+        ],
     ]
 ];

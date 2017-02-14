@@ -13,6 +13,8 @@ abstract class ResourceController extends Controller
 	{
 		$this->array['objects'] = $this->class::paginate(2);
 
+        $this->parameters_to_index();
+
         return $this->show_view('index', $this->array);
 	}
 
@@ -39,6 +41,8 @@ abstract class ResourceController extends Controller
     public function create()
     {
         $this->array['action'] = 'create';
+ 
+        $this->parameters_to_create_edit();
 
         return $this->show_view('create-edit', $this->array);
     }
@@ -54,7 +58,9 @@ abstract class ResourceController extends Controller
 
     	$this->validator($this->store_validates(), $request);
 
-        $this->class::create($this->modify_request($request)->all());
+        $object = $this->class::create($this->modify_request($request)->all());
+
+        $this->after_store($object, $request);
 
         Session::flash('flash_message', "$this->object_name successfully added!");
 
@@ -71,7 +77,10 @@ abstract class ResourceController extends Controller
     public function edit($id)
     {
     	$this->array['object'] = $this->getItem($id);
+
         $this->array['action'] = 'edit';
+
+        $this->parameters_to_create_edit();
 
         return $this->show_view('create-edit', $this->array);
     }
@@ -91,6 +100,8 @@ abstract class ResourceController extends Controller
 
         $object->fill($this->modify_request($request)->all())->update();
 
+        $this->after_update($object, $request);
+
         Session::flash('flash_message', "$this->object_name successfully updated!");
 
         return redirect()->back();
@@ -108,8 +119,11 @@ abstract class ResourceController extends Controller
 
 		try {
 	       $object->delete();
+
            Session::flash('flash_message', "$this->object_name successfully deleted!");
+
 	    } catch ( \Exception $e) {
+
 	       Session::flash('flash_error_message', "Cant delete becouse $this->object_name has items related");
 	    }
 
@@ -124,20 +138,29 @@ abstract class ResourceController extends Controller
         return $this->show_view('index', $this->search_condition($request));
     }
 
-    public function search_validates() {
+
+
+
+    ###### FUNCIONES PARA AGREGAR FUNCIONALIDAD #########
+
+    protected function after_store($object, Request $request) {}
+
+    protected function after_update($object, Request $request) {}
+
+    protected function parameters_to_index() {
+        #this->array['objects'] = $datas
+    }
+
+    protected function parameters_to_create_edit() {
+        #$this->array['key'] = $datas
+    }
+
+    protected function search_validates() {
+
         return ['q' => 'required|max:255'];
     }
 
-    protected function validator($validators, Request $request) {
-
-        $this->validate($request, $validators);
-    }
-
-    protected function getItem($id) {
-		return $this->class::findOrFail($id);
-    }
-
-    public function modify_request(Request $request) {
+    protected function modify_request(Request $request) {
     	return $request;
     }
 
@@ -151,5 +174,17 @@ abstract class ResourceController extends Controller
             'route' => $this->route_name,
             'object_name' => $this->object_name
         ];
+    }
+
+
+    ###### FUNCIONES PRIVADAS #########
+    private function validator($validators, Request $request) {
+
+        $this->validate($request, $validators);
+    }
+
+    private function getItem($id) {
+
+        return $this->class::findOrFail($id);
     }
 }

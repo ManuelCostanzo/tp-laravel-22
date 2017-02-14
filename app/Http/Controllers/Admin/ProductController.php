@@ -18,28 +18,16 @@ class ProductController extends ResourceController
         $this->array = [];
     }
 
-    public function create()
-    {
 
-        $this->array = [
-            'categories' => \App\Category::pluck('name', 'id'),
-            'brands' => \App\Brand::pluck('name', 'id'),
-            'providers' => \App\Provider::pluck('name', 'id')
-        ];
+    public function parameters_to_create_edit() {
 
-        return parent::create();
+        $this->array['categories'] = \App\Category::pluck('name', 'id');
+
+        $this->array['brands'] = \App\Brand::pluck('name', 'id');
+
+        $this->array['providers'] = \App\Provider::pluck('name', 'id');
     }
 
-    public function edit($id)
-    {
-        $this->array = [
-            'categories' => \App\Category::pluck('name', 'id'),
-            'brands' => \App\Brand::pluck('name', 'id'),
-            'providers' => \App\Provider::pluck('name', 'id')
-        ];
-
-        return parent::edit($id);
-    }
 
     public function store_validates() {
         return  [
@@ -72,6 +60,7 @@ class ProductController extends ResourceController
     }
 
     public function search_condition(Request $request) {
+
         return ['objects'  => Product::likeAll($request->q)->paginate(2)];
     }
 
@@ -90,8 +79,11 @@ class ProductController extends ResourceController
     public function modify_request(Request $request) {
 
         if ($request->hasFile('image_file') && $request->file('image_file')->isValid()) {
+
             $file = $request->file('image_file');
+
             $path = Storage::disk('public')->put(null, $file);
+
             $request->request->add(['image' => $path]);
         }       
 
@@ -99,6 +91,7 @@ class ProductController extends ResourceController
     }
 
     private function filter_by($filter) {
+        
         return ['objects'  => Product::whereRaw($filter)->paginate(2)];
     }
 }

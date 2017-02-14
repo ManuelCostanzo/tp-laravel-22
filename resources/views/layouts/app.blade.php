@@ -19,6 +19,7 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    {{ Html::script('js/jquery-3.1.1.min.js') }}
 </head>
 <body>
     <div id="app">

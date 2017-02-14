@@ -13,7 +13,7 @@ Laravel 5.4
 Paquetes:
 
 ```
-composer require "laravelcollective/html":"^5.2.0"
+composer require "laravelcollective/html":"^5.3.0"
 ```
 ```
 composer require "cviebrock/image-validator"

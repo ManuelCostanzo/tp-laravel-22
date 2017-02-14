@@ -18,26 +18,13 @@ class UserController extends ResourceController
         $this->array = [];
     }
 
-    public function create()
-    {
+    public function parameters_to_create_edit() {
 
-        $this->array = [
-            'roles' => \App\Role::pluck('name', 'id'),
-            'locations' => \App\Location::pluck('name', 'id')
-        ];
+        $this->array['roles'] = \App\Role::pluck('name', 'id');
 
-        return parent::create();
+        $this->array['locations'] = \App\Location::pluck('name', 'id');
     }
 
-    public function edit($id)
-    {
-         $this->array = [
-            'roles' => \App\Role::pluck('name', 'id'),
-            'locations' => \App\Location::pluck('name', 'id')
-        ];
-
-        return parent::edit($id);
-    }
 
     public function store_validates() {
         return [
@@ -76,8 +63,10 @@ class UserController extends ResourceController
     public function modify_request(Request $request) {
 
         if ($request->has('password')) {
+
             $request->merge(['password' => bcrypt($request->password)]);
         } else {
+
             $request->request->add(['password' => Auth::user()->password]);
         }
 
