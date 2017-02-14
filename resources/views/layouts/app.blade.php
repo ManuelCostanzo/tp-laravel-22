@@ -20,6 +20,7 @@
         ]) !!};
     </script>
     {{ Html::script('js/jquery-3.1.1.min.js') }}
+    @yield('javascript')
 </head>
 <body>
     <div id="app">

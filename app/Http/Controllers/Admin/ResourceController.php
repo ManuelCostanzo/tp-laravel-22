@@ -55,7 +55,6 @@ abstract class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-
     	$this->validator($this->store_validates(), $request);
 
         $object = $this->class::create($this->modify_request($request)->all());

@@ -32,5 +32,8 @@ return [
         'menus' => [
             'controller'      => 'MenuController',
         ],
+        'purchases' => [
+            'controller'      => 'PurchaseController',
+        ],
     ]
 ];

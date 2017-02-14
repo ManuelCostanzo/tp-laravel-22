@@ -2,9 +2,9 @@
     <div class="panel-heading">@if ($action == 'create') Create @else Edit @endif  {{$object_name}}</div>
     <div class="panel-body">
         @if ($action == 'create')
-            {!! Form::open(['url' => route($route . '.store'), 'class' => 'form-horizontal']) !!}
+            {!! Form::open(['url' => route($route . '.store'), 'class' => 'form-horizontal', 'files' => true]) !!}
         @else
-            {!! Form::model($object, ['method' => 'PATCH', 'url' => route($route . '.update', $object->id), 'class' => 'form-horizontal']) !!}
+            {!! Form::model($object, ['method' => 'PATCH', 'url' => route($route . '.update', $object->id), 'class' => 'form-horizontal', 'files' => true]) !!}
         @endif
 
             @include('admin/' . $route . '/form')

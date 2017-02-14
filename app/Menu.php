@@ -10,7 +10,7 @@ class Menu extends Model
 
 
     public  function scopeLike($query, $value){
-        return $query->where('date', '=', "%$value%");
+        return $query->where('date', '=', $value);
     }
 
 	public function products()

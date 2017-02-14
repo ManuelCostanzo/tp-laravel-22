@@ -19,9 +19,9 @@ class CategoryController extends ResourceController
 
     public function parameters_to_index()
     {
-        $this->array['objects'] = Category::with('children')->get()
+        $this->array['objects'] = Category::with('parent')->get()
                                 ->sortBy(function($category) {
-                                    return $category->children->count();
+                                    return $category->parent_count;
                                 });
     }
 
