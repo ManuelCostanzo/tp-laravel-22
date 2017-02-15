@@ -61,23 +61,23 @@ class PurchaseController extends ResourceController
 
     public function after_update($object, Request $request)
     {
+
+        $this->subtract_all_stock($object->products);
+
         $products = [];
+
+        $object->products()->detach();
+
         foreach ($request->product_id as $key => $product_id) {
 
             $id = $product_id['pr'];
 
             $quantity = $request->quantity[$key]['qt'];
 
-            $products[$key]['product_id'] = $id;
-
-            $products[$key]['quantity'] = $quantity;
-
-            \App\Product::find($id)->subtract_stock($object->products->find($id)->pivot->quantity);
-
             \App\Product::find($id)->increase_stock($quantity);
-        }
 
-        $object->products()->sync($products);
+            $object->products()->attach($id, ['quantity' => $quantity]);
+        }
     }
 
 
@@ -95,10 +95,15 @@ class PurchaseController extends ResourceController
         return $request;
     }
 
-
-
     public function search_condition(Request $request) {
 
         return ['objects'  => Purchase::like($request->q)->paginate(2)];
+    }
+
+    private function subtract_all_stock($products) {
+
+        foreach ($products as $pr) {
+            $pr->subtract_stock($pr->pivot->quantity);
+        }
     }
 }

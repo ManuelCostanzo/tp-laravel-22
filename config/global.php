@@ -35,5 +35,8 @@ return [
         'purchases' => [
             'controller'      => 'PurchaseController',
         ],
+        'sales' => [
+            'controller'      => 'SaleController',
+        ],
     ]
 ];

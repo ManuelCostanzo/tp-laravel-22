@@ -56,6 +56,10 @@ class SectionServiceProvider extends ServiceProvider
                     'icon'      => 'fa fa-shopping-cart',
                     'permission' => 'admin-mod',
                 ],
+                'sales' => [
+                    'icon'      => 'fa fa-exchange',
+                    'permission' => 'admin-mod',
+                ],
             ]
         );
     }

@@ -29,6 +29,9 @@ abstract class ResourceController extends Controller
 	{
 		$this->array['object'] = $this->getItem($id);
 
+        $this->parameters_to_show();
+
+
         return $this->show_view('show', $this->array);
 	}
 
@@ -147,6 +150,10 @@ abstract class ResourceController extends Controller
     protected function after_update($object, Request $request) {}
 
     protected function parameters_to_index() {
+        #this->array['objects'] = $datas
+    }
+
+    protected function parameters_to_show() {
         #this->array['objects'] = $datas
     }
 
