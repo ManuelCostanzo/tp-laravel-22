@@ -1,6 +1,4 @@
-# TP-LARAVEL=22
-
-Practica del tp final
+# PROYECTO TP FINAL
 
 ### Prerequisites
 
@@ -23,4 +21,20 @@ Base de datos:
 
 ```
 MYSQL
+```
+
+### INSTALACION
+
+```
+crear base de datos y configurar los datos en .env (por defecto grupo3)
+```
+
+EJECUTAR:
+
+```
+php artisan migrate --seed
+```
+
+```
+php artisan serve
 ```

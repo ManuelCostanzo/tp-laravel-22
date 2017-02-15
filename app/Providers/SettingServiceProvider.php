@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use View;
 use Config;
+use Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Broadcast;
 
@@ -16,6 +16,8 @@ class SettingServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Config::set('settings', \App\Setting::find(1));
-    }
+    	if(Schema::hasTable('settings'))
+	        Config::set('settings', \App\Setting::first());
+	    
+	}
 }
