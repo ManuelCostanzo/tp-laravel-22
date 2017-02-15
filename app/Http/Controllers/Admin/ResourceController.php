@@ -11,7 +11,7 @@ abstract class ResourceController extends Controller
 
 	public function index()
 	{
-		$this->array['objects'] = $this->class::paginate(2);
+		$this->array['objects'] = $this->class->paginate(2);
 
         $this->parameters_to_index();
 
@@ -57,7 +57,7 @@ abstract class ResourceController extends Controller
     {
     	$this->validator($this->store_validates(), $request);
 
-        $object = $this->class::create($this->modify_request($request)->all());
+        $object = $this->class->create($this->modify_request($request)->all());
 
         $this->after_store($object, $request);
 
@@ -114,7 +114,7 @@ abstract class ResourceController extends Controller
      */
     public function destroy($id)
     {
-        $object = $this->class::findOrFail($id);
+        $object = $this->class->findOrFail($id);
 
 		try {
 	       $object->delete();
@@ -184,6 +184,6 @@ abstract class ResourceController extends Controller
 
     private function getItem($id) {
 
-        return $this->class::findOrFail($id);
+        return $this->class->findOrFail($id);
     }
 }

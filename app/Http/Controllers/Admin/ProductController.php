@@ -12,7 +12,7 @@ class ProductController extends ResourceController
 
     public function __construct()
     {
-        $this->class = Product::class;
+        $this->class = new Product;
         $this->object_name = 'product';
         $this->route_name = 'products';
         $this->array = [];

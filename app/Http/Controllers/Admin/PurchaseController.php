@@ -12,7 +12,7 @@ class PurchaseController extends ResourceController
 
     public function __construct(Request $request)
     {
-        $this->class = Purchase::class;
+        $this->class = new Purchase;
         $this->object_name = 'purchse';
         $this->route_name = 'purchases';
         $this->array = [];
@@ -28,8 +28,8 @@ class PurchaseController extends ResourceController
     public function store_validates() {
         return [
             'provider_id' => 'required|exists:providers,id',
-            'product_id' => 'required|distinct|exists:products,id',
-            'quantity.*' => ['regex:/^[0-9]+$/'],
+            'product_id.*.pr' => 'required|distinct|exists:products,id',
+            'quantity.*.qt' => 'required_with:product_id|numeric',
             'image_bill' => 'required|image',
         ];
     }
@@ -37,22 +37,28 @@ class PurchaseController extends ResourceController
     public function update_validates($purchase) {
         return [
             'provider_id' => 'required|exists:providers,id',
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required_with:product_id|numeric',
-            'image_bill' => 'image',
+            'product_id.*.pr' => 'required|distinct|exists:products,id',
+            'quantity.*.qt' => 'required_with:product_id|numeric',
+            'image_bill' => 'nullable|image',
         ];
     }
 
 
     public function after_store($object, Request $request)
     {
-        var_dump($request->quantity); exit;
-        $object->products()->attach($request->product_id, $request->quantity);
+        foreach ($request->product_id as $key => $product_id) {
+
+          $object->products()->attach($product_id['pr'], ['quantity' => $request->quantity[$key]['qt']]);
+        }
+        
     }
 
     public function after_update($object, Request $request)
     {
-        $object->products()->sync($request->product_id);
+        foreach ($request->product_id as $key => $product_id) {
+            
+          $object->products()->sync([$product_id['pr'] => ['quantity' => $request->quantity[$key]['qt']]], false);
+        }
     }
 
 

@@ -11,7 +11,7 @@ class BrandController extends ResourceController
 
     public function __construct(Request $request)
     {
-        $this->class = Brand::class;
+        $this->class = new Brand;
         $this->object_name = 'brand';
         $this->route_name = 'brands';
         $this->array = [];

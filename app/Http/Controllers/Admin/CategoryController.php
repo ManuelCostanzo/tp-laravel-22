@@ -11,7 +11,7 @@ class CategoryController extends ResourceController
 
     public function __construct()
     {
-        $this->class = Category::class;
+        $this->class = new Category;
         $this->object_name = 'category';
         $this->route_name = 'categories';
         $this->array = [];

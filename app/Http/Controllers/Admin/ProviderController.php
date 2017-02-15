@@ -11,7 +11,7 @@ class ProviderController extends ResourceController
 
     public function __construct()
     {
-        $this->class = Provider::class;
+        $this->class = new Provider;
         $this->object_name = 'provider';
         $this->route_name = 'providers';
         $this->array = [];

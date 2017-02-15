@@ -2,14 +2,14 @@
 
 @section('admin-content')
 
-	<h1>{{$object->date }}</h1>
+	<h1>{{$object->created_at }}</h1>
 	<hr>
 	<h2> PROVIDER </h2> <li>{{$object->provider->name}}</li>
 	<h2> PRODUCTS </h2>
 	@foreach ($object->products as $pr)
 		<li> NAME: {{$pr->name}} </li>
-		<li> QUIANTITY: {{$pr->quantity}} </li>
-		<li> TOTAL PRICE: {{$pr->quantity * $pr->product->unit_price}} </li>
+		<li> QUIANTITY: {{$pr->pivot->quantity}} </li>
+		<li> TOTAL PRICE: ${{$pr->pivot->quantity * $pr->unit_price}} </li>
 	@endforeach
 	<br><br>
 	<li>CREATED AT: {{$object->created_at}}</li>

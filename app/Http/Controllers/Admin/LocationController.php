@@ -11,7 +11,7 @@ class LocationController extends ResourceController
 
     public function __construct(Request $request)
     {
-        $this->class = Location::class;
+        $this->class = new Location;
         $this->object_name = 'location';
         $this->route_name = 'locations';
         $this->array = [];

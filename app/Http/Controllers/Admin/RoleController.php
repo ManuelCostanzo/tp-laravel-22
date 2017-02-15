@@ -11,7 +11,7 @@ class RoleController extends ResourceController
 
     public function __construct(Request $request)
     {
-        $this->class = Role::class;
+        $this->class = new Role;
         $this->object_name = 'role';
         $this->route_name = 'roles';
         $this->array = [];

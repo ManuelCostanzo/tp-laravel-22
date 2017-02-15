@@ -12,7 +12,7 @@ class UserController extends ResourceController
 
     public function __construct(Request $request)
     {
-        $this->class = User::class;
+        $this->class = new User;
         $this->object_name = 'user';
         $this->route_name = 'users';
         $this->array = [];
