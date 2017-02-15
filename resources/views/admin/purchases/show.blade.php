@@ -5,6 +5,7 @@
 	<h1>{{$object->created_at }}</h1>
 	<hr>
 	<h2> PROVIDER </h2> <li>{{$object->provider->name}}</li>
+	<li> BILL: {{ Html::image(Storage::disk('uploads')->url($object->bill), 'bill') }}</li>
 	<h2> PRODUCTS </h2>
 	@foreach ($object->products as $pr)
 		<li> NAME: {{$pr->name}} </li>
