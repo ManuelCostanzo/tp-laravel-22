@@ -12,7 +12,7 @@
 	@foreach($objects as $sa)
       <tr>
         <td>{{$sa->created_at}}</td>
-        <td></td>
+        <td>{{$sa->total_price}}</td>
         <td> <a href="{{ route('sales.show', $sa->id) }}" class="btn btn-sm btn-primary"> show </a></td>
         <td> <a href="{{ route('sales.edit', $sa->id) }}" class="btn btn-sm btn-warning"> edit </a></td>
         <td>        

@@ -82,6 +82,13 @@ class SaleController extends ResourceController
         }
     }
 
+    public function parameters_to_index() {
+
+        foreach ($this->array['objects'] as $key => $sale) {
+            $sale['total_price'] =  $this->get_total_price($sale);
+        }
+    }
+
     public function parameters_to_show() {
 
         $this->array['total_price'] = $this->get_total_price($this->array['object']);
