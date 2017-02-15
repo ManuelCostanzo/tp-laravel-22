@@ -94,12 +94,7 @@ class PurchaseController extends ResourceController
 
         return $request;
     }
-
-    public function search_condition(Request $request) {
-
-        return ['objects'  => Purchase::like($request->q)->paginate(2)];
-    }
-
+    
     private function subtract_all_stock($products) {
 
         foreach ($products as $pr) {

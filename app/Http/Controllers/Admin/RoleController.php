@@ -25,8 +25,4 @@ class RoleController extends ResourceController
     public function update_validates($role) {
         return ['name' => 'required|min:5|max:45|unique:roles,name,'.$role->id];
     }
-
-    public function search_condition(Request $request) {
-        return ['objects'  => Role::like($request->q)->paginate(2)];
-    }
 }

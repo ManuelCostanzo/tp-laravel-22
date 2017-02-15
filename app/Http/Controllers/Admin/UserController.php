@@ -57,7 +57,7 @@ class UserController extends ResourceController
     }
 
     public function search_condition(Request $request) {
-        return ['objects'  => User::likeAll($request->q)->paginate(2)];
+        return ['objects'  => User::likeAll($request->q)->paginate(config('settings.items_per_page'))];
     }
 
     public function modify_request(Request $request) {

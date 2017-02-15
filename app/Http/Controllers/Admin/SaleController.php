@@ -94,12 +94,6 @@ class SaleController extends ResourceController
         $this->array['total_price'] = $this->get_total_price($this->array['object']);
     }
 
-
-    public function search_condition(Request $request) {
-
-        return ['objects'  => Sale::like($request->q)->paginate(2)];
-    }
-
     private function increase_all_stock($products) {
 
         foreach ($products as $pr) {

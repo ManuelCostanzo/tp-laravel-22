@@ -11,11 +11,10 @@
         <div class="menu-list">
   
             <ul id="menu-content" class="menu-content collapse out">
-                <li {{ (Request::is('admin') ? 'class=active' : '') }}>
-                  <a href="/admin">
-                  <i class="fa fa-dashboard fa-lg"></i> Dashboard
-                  </a>
-                </li>
+                <li {{ (Request::is('admin') ? 'class=active' : '') }}> <a href="/admin">  <i class="fa fa-dashboard fa-lg"></i> Dashboard</a></li>
+                @can('admin')
+                  <li {{ (Request::is('admin/settings') ? 'class=active' : '') }}> <a href="/admin/settings">  <i class="fa fa-cog fa-lg"></i> Settings</a></li>
+                @endcan
 
           @foreach($sections as $key => $value)
               @can($value['permission'])

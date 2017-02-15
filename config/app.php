@@ -179,6 +179,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\SectionServiceProvider::class,
+        App\Providers\SettingServiceProvider::class,
 
     ],
 

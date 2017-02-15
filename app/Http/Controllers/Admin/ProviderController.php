@@ -32,6 +32,6 @@ class ProviderController extends ResourceController
     }
 
     public function search_condition(Request $request) {
-        return ['objects'  => Provider::likeAll($request->q)->paginate(2)];
+        return ['objects'  => Provider::likeAll($request->q)->paginate(config('settings.items_per_page'))];
     }
 }

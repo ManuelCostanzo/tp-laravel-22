@@ -48,15 +48,11 @@ class MenuController extends ResourceController
     public function after_update($object, Request $request)
     {
         $products = [];
+
         foreach ($request->product_id as $product_id) {
-            $products[]=$product_id['pr'];
+            $products[] = $product_id['pr'];
         }
 
         $object->products()->sync($products);
-    }
-
-    public function search_condition(Request $request) {
-
-        return ['objects'  => Menu::like($request->q)->paginate(2)];
     }
 }

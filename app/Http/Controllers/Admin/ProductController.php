@@ -61,7 +61,7 @@ class ProductController extends ResourceController
 
     public function search_condition(Request $request) {
 
-        return ['objects'  => Product::likeAll($request->q)->paginate(2)];
+        return ['objects'  => Product::likeAll($request->q)->paginate(config('settings.items_per_page'))];
     }
 
 
@@ -92,6 +92,6 @@ class ProductController extends ResourceController
 
     private function filter_by($filter) {
         
-        return ['objects'  => Product::whereRaw($filter)->paginate(2)];
+        return ['objects'  => Product::whereRaw($filter)->paginate(config('settings.items_per_page'))];
     }
 }

@@ -21,6 +21,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 	#ADMIN AREA
     Route::group(['middleware' => 'permissions:admin'], function() {
+    	Route::get('settings', 'SettingController@index')->name('admin.index');
+		Route::resource('settings', 'SettingController', [
+		    'only' => ['update']
+		]);
     	create_admin_routes('admin');
    	});
 

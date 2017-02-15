@@ -25,8 +25,4 @@ class LocationController extends ResourceController
     public function update_validates($brand) {
         return ['name' => 'required|min:5|max:45|unique:locations,name,'.$brand->id];
     }
-
-    public function search_condition(Request $request) {
-        return ['objects'  => Location::like($request->q)->paginate(2)];
-    }
 }

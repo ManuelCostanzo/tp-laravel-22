@@ -11,7 +11,7 @@ abstract class ResourceController extends Controller
 
 	public function index()
 	{
-		$this->array['objects'] = $this->class->paginate(2);
+		$this->array['objects'] = $this->class->paginate(config('settings.items_per_page'));
 
         $this->parameters_to_index();
 
@@ -172,6 +172,10 @@ abstract class ResourceController extends Controller
 
     protected function show_view($section, $params) {
         return view('admin.resource', $params, $this->get_view_params($section));
+    }
+
+    protected function search_condition(Request $request) {
+        return ['objects'  => $this->class->like($request->q)->paginate(config('settings.items_per_page'))];
     }
 
     protected function get_view_params($section) {

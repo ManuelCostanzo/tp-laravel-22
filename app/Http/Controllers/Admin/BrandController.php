@@ -25,8 +25,4 @@ class BrandController extends ResourceController
     public function update_validates($brand) {
         return ['name' => 'required|min:5|max:45|unique:brands,name,'.$brand->id];
     }
-
-    public function search_condition(Request $request) {
-        return ['objects'  => Brand::like($request->q)->paginate(2)];
-    }
 }
