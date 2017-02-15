@@ -39,6 +39,14 @@ class Product extends Model {
              });
     }
 
+    public function subtract_stock($amount) {
+        $this->update(['stock' => $this->stock - $amount]);
+    }
+
+    public function increase_stock($amount) {
+        $this->update(['stock' => $this->stock + $amount]);
+    }
+
     public function provider()
     {
         return $this->belongsTo('App\Provider');

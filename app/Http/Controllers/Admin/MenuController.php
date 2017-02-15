@@ -47,7 +47,12 @@ class MenuController extends ResourceController
 
     public function after_update($object, Request $request)
     {
-        $object->products()->sync($request->product_id['pr']);
+        $products = [];
+        foreach ($request->product_id as $product_id) {
+            $products[]=$product_id['pr'];
+        }
+
+        $object->products()->sync($products);
     }
 
     public function search_condition(Request $request) {

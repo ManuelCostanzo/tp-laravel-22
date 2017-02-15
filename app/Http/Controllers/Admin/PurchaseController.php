@@ -48,17 +48,36 @@ class PurchaseController extends ResourceController
     {
         foreach ($request->product_id as $key => $product_id) {
 
-          $object->products()->attach($product_id['pr'], ['quantity' => $request->quantity[$key]['qt']]);
+            $id = $product_id['pr'];
+
+            $quantity = $request->quantity[$key]['qt'];
+
+            $object->products()->attach($id, ['quantity' => $quantity]);
+
+            \App\Product::find($id)->increase_stock($quantity);
         }
         
     }
 
     public function after_update($object, Request $request)
     {
+        $products = [];
         foreach ($request->product_id as $key => $product_id) {
-            
-          $object->products()->sync([$product_id['pr'] => ['quantity' => $request->quantity[$key]['qt']]], false);
+
+            $id = $product_id['pr'];
+
+            $quantity = $request->quantity[$key]['qt'];
+
+            $products[$key]['product_id'] = $id;
+
+            $products[$key]['quantity'] = $quantity;
+
+            \App\Product::find($id)->subtract_stock($object->products->find($id)->pivot->quantity);
+
+            \App\Product::find($id)->increase_stock($quantity);
         }
+
+        $object->products()->sync($products);
     }
 
 

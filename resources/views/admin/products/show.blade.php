@@ -7,7 +7,7 @@
 
 	<h2>Datas</h1>
 	<li>BARCODE: {{$object->barcode}}</li>
-	<li>STOCK: {{$object->sotck}}</li>
+	<li>STOCK: {{$object->stock}}</li>
 	<li>MINIMUM_STOCK: {{$object->minimum_stock}}</li>
 	<li>UNIT_PRICE: ${{$object->unit_price}}</li>
 	<li>DESCRIPTION: <p>{{$object->description}}</p></li>
