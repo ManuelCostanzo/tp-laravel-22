@@ -41,15 +41,15 @@ class Product extends Model {
 
     public function provider()
     {
-        return $this->hasOne('App\Provider', 'id', 'provider_id');
+        return $this->belongsTo('App\Provider');
     }
 
     public function category()
     {
-        return $this->hasOne('App\Category', 'id', 'category_id');
+        return $this->belongsTo('App\Category');
     }
 
     public function brand() {
-        return $this->hasOne('App\Brand', 'id', 'brand_id');
+        return $this->belongsTo('App\Brand');
     }
 }
